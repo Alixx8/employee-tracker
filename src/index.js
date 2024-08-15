@@ -1,17 +1,21 @@
 import express from 'express'
 import 'dotenv/config'
 import { initDB } from './db.js'
+import { makeApp } from './controllers.js'
 
 // Initialize DB
 
+let db; 
 try {
-    const db = await initDB()
+    db = await initDB()
 } catch(err) {
     console.log("ERROR: db initializing: " + err)
 }
 
-
 const app = express()
+
+makeApp(app, db)
+
 const port = process.env.APP_PORT
 
 app.get('/', (req, res) => {
