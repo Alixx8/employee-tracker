@@ -1,17 +1,16 @@
 import express from 'express'
 import 'dotenv/config'
-import { initDB } from './db.js'
+import dal from './dal.js'
 import { makeApp } from './controllers.js'
 
 // Initialize DB
 
 let db; 
 try {
-    db = await initDB()
+     db = await dal.initDB()
 } catch(err) {
     console.log("ERROR: db initializing: " + err)
     throw new Error(err);
-    
 }
 
 const app = express()

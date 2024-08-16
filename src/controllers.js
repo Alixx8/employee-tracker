@@ -1,15 +1,31 @@
+import dal from './dal.js';
+import express from 'express';
+
+
 function makeApp(app, dbConn) {
-    app.get('/users', async (req, res) => {
-    // Read (GET)
+    app.use(express.json());
+
+    app.get('/employees', async (req, res) => {
     try {
-      const query = 'SELECT * FROM users';
-      const result = await dbConn.query(query);
+      const result =  await dal.getEmployees(dbConn)
       res.json(result.rows);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'An error occurred' });
     }
   });
+
+  app.post('/employees', async (req, res) => {
+    try {
+      const employee = req.body
+      const result =  await dal.createEmployee(dbConn, employee)
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
+
 }
 
 export {
