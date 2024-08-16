@@ -1,7 +1,7 @@
 import express from 'express'
 import 'dotenv/config'
 import dal from './dal.js'
-import { makeApp } from './controllers.js'
+import { mountEmployees } from './controllers/employees.js'
 
 // Initialize DB
 
@@ -15,7 +15,7 @@ try {
 
 const app = express()
 
-makeApp(app, db)
+mountEmployees(app, db)
 
 const port = process.env.APP_PORT
 

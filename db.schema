@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS employees;
 
 CREATE TABLE employees (
@@ -8,7 +9,14 @@ CREATE TABLE employees (
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
-INSERT INTO employees (name, age, role, email)
-VALUES
-    ('John Doe', 25, 'manager', 'john.doe@example.com'),
-    ('Jane Smith', 26, 'employee', 'jane.smith@example.com');
+
+CREATE TABLE ratings (
+    id SERIAL PRIMARY KEY,
+    employeeID integer NOT NULL,
+    days integer NOT NULL,
+    rating integer NOT NULL,
+    CONSTRAINT fk_employees_ratings
+      FOREIGN KEY(employeeID) 
+      REFERENCES employees(id) ON DELETE CASCADE
+);
+

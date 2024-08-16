@@ -1,8 +1,8 @@
-import dal from './dal.js';
+import dal from '../dal.js';
 import express from 'express';
 
 
-function makeApp(app, dbConn) {
+function mountEmployees(app, dbConn) {
     app.use(express.json());
 
     app.get('/employees', async (req, res) => {
@@ -54,5 +54,5 @@ function makeApp(app, dbConn) {
 }
 
 export {
-    makeApp
+  mountEmployees
 }
