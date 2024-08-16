@@ -1,6 +1,6 @@
 import express from 'express'
 import 'dotenv/config'
-import dal from './dal.js'
+import dal from './dal/employees.js'
 import { mountEmployees } from './controllers/employees.js'
 
 // Initialize DB
