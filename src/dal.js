@@ -26,8 +26,24 @@ async function createEmployee(dbConn, employee) {
     );
 }
 
+
+async function updateEmployee(dbConn, id, employee) {
+    return await dbConn.query('UPDATE employees SET name = $1, email = $2, age = $3, role = $4 WHERE id = $5 RETURNING *', 
+        [employee.name, employee.email, employee.age, employee.role, id]
+    );
+}
+
+
+async function deleteEmployee(dbConn, id) {
+    return await dbConn.query('DELETE FROM employees WHERE id = $1', 
+        [id]
+    );
+}
+
 export default {
     initDB,
     getEmployees,
     createEmployee,
+    deleteEmployee,
+    updateEmployee,
 }
