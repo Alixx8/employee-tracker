@@ -1,12 +1,14 @@
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE users (
+CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    age integer NOT NULL,
+    role VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
-INSERT INTO users (name, email)
+INSERT INTO employees (name, age, role, email)
 VALUES
-    ('John Doe', 'john.doe@example.com'),
-    ('Jane Smith', 'jane.smith@example.com');
+    ('John Doe', 25, 'manager', 'john.doe@example.com'),
+    ('Jane Smith', 26, 'employee', 'jane.smith@example.com');

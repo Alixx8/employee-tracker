@@ -10,6 +10,8 @@ try {
     db = await initDB()
 } catch(err) {
     console.log("ERROR: db initializing: " + err)
+    throw new Error(err);
+    
 }
 
 const app = express()
