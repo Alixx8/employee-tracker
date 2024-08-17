@@ -1,4 +1,6 @@
 import dal from "../dal/users.js";
+import { createHash } from 'crypto';
+
 
 function makeAuthenticationMW(dbConn) {
   return async (req, res, next) => {
@@ -15,10 +17,11 @@ function makeAuthenticationMW(dbConn) {
       .split(":");
     const user = auth[0];
     const pass = auth[1];
+    const passHash = createHash('sha256').update(pass).digest('hex');
 
     let result;
     try {
-      result = await dal.getAuthUser(dbConn, user, pass);
+      result = await dal.getAuthUser(dbConn, user, passHash);
     } catch (err) {
       res.status(500);
       res.json({ error: "internal server error" });
@@ -30,19 +33,10 @@ function makeAuthenticationMW(dbConn) {
       res.json({ error: "invalid user or password" });
       return;
     }
-
     const authUser = result.rows[0];
-
     req.isAdmin = authUser.isAdmin;
 
-    if (user == authUser.email && pass == authUser.hash) {
-      // If Authorized user
-      next();
-    } else {
-      res.status(401);
-      res.json({ error: "invalid user or password" });
-      return;
-    }
+    next();
   };
 }
 
