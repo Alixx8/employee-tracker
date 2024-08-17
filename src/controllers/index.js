@@ -31,6 +31,8 @@ function makeAuthenticationMW(dbConn) {
         }
 
         const authUser = result.rows[0]
+
+        req.isAdmin = authUser.isAdmin
       
         if (user == authUser.email  && pass == authUser.hash) {
             // If Authorized user

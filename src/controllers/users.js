@@ -5,6 +5,11 @@ function mountUsers(app, dbConn) {
     app.use(express.json());
 
     app.get('/users', async (req, res) => {
+      if (!req.isAdmin) {
+        res.status(401);
+        res.json({ error: 'not authorized' })
+        return
+      }
     try {
       const result =  await dal.getUsers(dbConn)
       res.json(result.rows);
@@ -15,6 +20,11 @@ function mountUsers(app, dbConn) {
   });
 
   app.post('/users', async (req, res) => {
+    if (!req.isAdmin) {
+      res.status(401);
+      res.json({ error: 'not authorized' })
+      return
+    }
     try {
       const user = req.body
       const result =  await dal.createUser(dbConn, user)
@@ -26,6 +36,12 @@ function mountUsers(app, dbConn) {
   });
 
   app.delete('/users/:id', async (req, res) => {
+    if (!req.isAdmin) {
+      res.status(401);
+      res.json({ error: 'not authorized' })
+      return
+    }
+    
     const id = req.params.id;
 
     try {
