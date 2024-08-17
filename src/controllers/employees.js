@@ -1,5 +1,6 @@
 import dal from "../dal/employees.js";
 import express from "express";
+import { validateNewEmployee, ValidationError } from "../errors.js";
 
 function mountEmployees(app, dbConn) {
   app.use(express.json());
@@ -17,9 +18,16 @@ function mountEmployees(app, dbConn) {
   app.post("/employees", async (req, res) => {
     try {
       const employee = req.body;
+      validateNewEmployee(employee)
+
       const result = await dal.createEmployee(dbConn, employee);
       res.json(result.rows[0]);
-    } catch (err) {
+    } 
+    catch (err) {
+      if (err instanceof ValidationError) {
+        res.status(400).json({ errs: err.errs });
+        return
+      }
       console.error(err);
       res.status(500).json({ error: "An error occurred" });
     }
