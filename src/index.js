@@ -3,6 +3,7 @@ import 'dotenv/config'
 import dal from './dal/employees.js'
 import { mountEmployees } from './controllers/employees.js'
 import { mountRatings } from './controllers/ratings.js'
+import { mountUsers } from './controllers/users.js'
 
 // Initialize DB
 
@@ -16,6 +17,7 @@ try {
 
 const app = express()
 
+mountUsers(app, db)
 mountEmployees(app, db)
 mountRatings(app, db)
 
