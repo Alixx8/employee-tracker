@@ -1,8 +1,12 @@
+drop table users;
+drop table ratings;
+drop table employees;
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     hash VARCHAR(255) NOT NULL,
-    isAdmin boolean NOT NULL
+    "isAdmin" boolean NOT NULL
 );
 
 
@@ -17,10 +21,10 @@ CREATE TABLE IF NOT EXISTS employees (
 
 CREATE TABLE IF NOT EXISTS ratings (
     id SERIAL PRIMARY KEY,
-    employeeID integer NOT NULL,
+    "employeeID" integer NOT NULL,
     days integer NOT NULL,
     rating integer NOT NULL,
     CONSTRAINT fk_employees_ratings
-      FOREIGN KEY(employeeID) 
+      FOREIGN KEY("employeeID") 
       REFERENCES employees(id) ON DELETE CASCADE
 );
