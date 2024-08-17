@@ -1,6 +1,6 @@
-drop table users;
-drop table ratings;
-drop table employees;
+drop table if exists users;
+drop table if exists ratings;
+drop table if exists employees;
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
@@ -28,3 +28,6 @@ CREATE TABLE IF NOT EXISTS ratings (
       FOREIGN KEY("employeeID") 
       REFERENCES employees(id) ON DELETE CASCADE
 );
+
+
+INSERT INTO users(email, hash, "isAdmin") VALUES('master@gmail.com', '123', true);

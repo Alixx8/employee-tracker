@@ -3,7 +3,7 @@ import fs from "node:fs"
 import path  from "node:path";
 
 async function getUsers(dbConn) {
-    return await dbConn.query('SELECT * FROM users');
+    return await dbConn.query('SELECT email, "isAdmin" FROM users');
 }
 
 async function createUser(dbConn, user) {
