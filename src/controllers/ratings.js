@@ -62,6 +62,27 @@ function mountRatings(app, dbConn) {
       res.status(500).json({ error: "An error occurred" });
     }
   });
+
+  app.get("/employees/:empId/performance", async (req, res) => {
+    const empId = req.params.empId;
+    try {
+      const result = await dal.getRatings(dbConn, empId);
+
+      let sum = 0;
+      let daysCount = 0;
+      for (let i = 0; i < result.rows.length; i++) {
+        let row = result.rows[i];
+        let mul = row.days * row.rating;
+        sum = sum + mul;
+        daysCount = daysCount + row.days;
+      }
+      let avg = sum / daysCount;
+      res.json({ result: avg });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "An error occurred" });
+    }
+  });
 }
 
 export { mountRatings };
