@@ -29,7 +29,7 @@ function mountUsers(app, dbConn) {
     }
     try {
       const user = req.body;
-      validateNewUser(user)
+      validateNewUser(user);
 
       user.hash = createHash("sha256").update(user.password).digest("hex");
 
@@ -38,7 +38,7 @@ function mountUsers(app, dbConn) {
     } catch (err) {
       if (err instanceof ValidationError) {
         res.status(400).json({ errs: err.errs });
-        return
+        return;
       }
       console.error(err);
       res.status(500).json({ error: "An error occurred" });

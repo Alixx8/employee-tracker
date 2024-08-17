@@ -22,14 +22,14 @@ function mountRatings(app, dbConn) {
 
     try {
       const rating = req.body;
-      validateNewRating(rating)
+      validateNewRating(rating);
 
       const result = await dal.createRating(dbConn, empId, rating);
       res.json(result.rows[0]);
     } catch (err) {
       if (err instanceof ValidationError) {
         res.status(400).json({ errs: err.errs });
-        return
+        return;
       }
       console.error(err);
       res.status(500).json({ error: "An error occurred" });
