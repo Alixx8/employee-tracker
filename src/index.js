@@ -4,6 +4,7 @@ import dal from './dal/employees.js'
 import { mountEmployees } from './controllers/employees.js'
 import { mountRatings } from './controllers/ratings.js'
 import { mountUsers } from './controllers/users.js'
+import { makeAuthenticationMW } from './controllers/index.js'
 
 // Initialize DB
 
@@ -17,16 +18,13 @@ try {
 
 const app = express()
 
+app.use(makeAuthenticationMW(db))
 mountUsers(app, db)
 mountEmployees(app, db)
 mountRatings(app, db)
 
 const port = process.env.APP_PORT
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`INFO: app listening on port ${port}`)
 })

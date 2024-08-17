@@ -31,3 +31,4 @@ CREATE TABLE IF NOT EXISTS ratings (
 
 
 INSERT INTO users(email, hash, "isAdmin") VALUES('master@gmail.com', '123', true);
+INSERT INTO users(email, hash, "isAdmin") VALUES('user@gmail.com', 'abc', false);
