@@ -7,8 +7,8 @@ async function getUsers(dbConn) {
 }
 
 async function createUser(dbConn, user) {
-    return await dbConn.query('INSERT INTO users(email, hash) VALUES ($1, $2) RETURNING *', 
-        [user.email, user.hash]
+    return await dbConn.query('INSERT INTO users(email, hash, isAdmin) VALUES ($1, $2, $3) RETURNING *', 
+        [user.email, user.hash, user.isAdmin]
     );
 }
 
