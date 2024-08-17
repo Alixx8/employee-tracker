@@ -1,7 +1,6 @@
 import dal from "../dal/users.js";
 import express from "express";
-import { createHash } from 'crypto';
-
+import { createHash } from "crypto";
 
 function mountUsers(app, dbConn) {
   app.use(express.json());
@@ -29,7 +28,7 @@ function mountUsers(app, dbConn) {
     }
     try {
       const user = req.body;
-      user.hash = createHash('sha256').update(user.password).digest('hex');
+      user.hash = createHash("sha256").update(user.password).digest("hex");
 
       const result = await dal.createUser(dbConn, user);
       res.json(result.rows[0]);

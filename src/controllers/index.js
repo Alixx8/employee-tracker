@@ -1,6 +1,5 @@
 import dal from "../dal/users.js";
-import { createHash } from 'crypto';
-
+import { createHash } from "crypto";
 
 function makeAuthenticationMW(dbConn) {
   return async (req, res, next) => {
@@ -17,7 +16,7 @@ function makeAuthenticationMW(dbConn) {
       .split(":");
     const user = auth[0];
     const pass = auth[1];
-    const passHash = createHash('sha256').update(pass).digest('hex');
+    const passHash = createHash("sha256").update(pass).digest("hex");
 
     let result;
     try {
